@@ -17,13 +17,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{A91CF2EA-4190-418A-903F-B7D26D0D9F4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.CrudTest.Domain", "Mc2.CrudTest.Core\Domain\Mc2.CrudTest.Domain\Mc2.CrudTest.Domain.csproj", "{F6F716A9-B529-4FCD-AD71-8372619CA9FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Domain", "Mc2.CrudTest.Core\Domain\Mc2.CrudTest.Domain\Mc2.CrudTest.Domain.csproj", "{F6F716A9-B529-4FCD-AD71-8372619CA9FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.CrudTest.Application", "Mc2.CrudTest.Core\Application\Mc2.CrudTest.Application\Mc2.CrudTest.Application.csproj", "{F73C76E1-C6A5-4F0E-89FF-62DC1A760008}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Application", "Mc2.CrudTest.Core\Application\Mc2.CrudTest.Application\Mc2.CrudTest.Application.csproj", "{F73C76E1-C6A5-4F0E-89FF-62DC1A760008}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.CrudTest.Infrastructure", "Mc2.CrudTest.Core\Infra\Mc2.CrudTest.Infrastructure\Mc2.CrudTest.Infrastructure.csproj", "{54CAF1D1-D6B6-4687-818A-B0E15AD3F2A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Infrastructure", "Mc2.CrudTest.Core\Infra\Mc2.CrudTest.Infrastructure\Mc2.CrudTest.Infrastructure.csproj", "{54CAF1D1-D6B6-4687-818A-B0E15AD3F2A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.CrudTest.Api", "Mc2.CrudTest.Presentation\Api\Mc2.CrudTest.Api\Mc2.CrudTest.Api.csproj", "{AE52B422-5A8A-4725-9BF6-A57AE00C6013}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Api", "Mc2.CrudTest.Presentation\Api\Mc2.CrudTest.Api\Mc2.CrudTest.Api.csproj", "{AE52B422-5A8A-4725-9BF6-A57AE00C6013}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.CrudTest.Domain.Tests", "Mc2.CrudTest.UnitTests\Domain.Tests\Mc2.CrudTest.Domain.Tests\Mc2.CrudTest.Domain.Tests.csproj", "{7F67FB6E-5AC6-4C46-9B4E-A71CBE1E36CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{AE52B422-5A8A-4725-9BF6-A57AE00C6013}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE52B422-5A8A-4725-9BF6-A57AE00C6013}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE52B422-5A8A-4725-9BF6-A57AE00C6013}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F67FB6E-5AC6-4C46-9B4E-A71CBE1E36CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F67FB6E-5AC6-4C46-9B4E-A71CBE1E36CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F67FB6E-5AC6-4C46-9B4E-A71CBE1E36CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F67FB6E-5AC6-4C46-9B4E-A71CBE1E36CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{F73C76E1-C6A5-4F0E-89FF-62DC1A760008} = {A91CF2EA-4190-418A-903F-B7D26D0D9F4C}
 		{54CAF1D1-D6B6-4687-818A-B0E15AD3F2A0} = {A91CF2EA-4190-418A-903F-B7D26D0D9F4C}
 		{AE52B422-5A8A-4725-9BF6-A57AE00C6013} = {5689B9B9-23DF-4F98-A6F3-2A67370505AF}
+		{7F67FB6E-5AC6-4C46-9B4E-A71CBE1E36CA} = {E00CB329-5B9D-4514-9FFF-D499AEEDF301}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B5A26C9-68C1-49D9-9F32-AF907A1730C2}
