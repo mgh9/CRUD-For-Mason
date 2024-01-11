@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CSharpFunctionalExtensions" Version="2.40.3" />
+		<PackageReference Include="IbanNet" Version="5.13.0" />
 		<PackageReference Include="libphonenumber-csharp" Version="8.13.27" />
 		<PackageReference Include="MediatR" Version="12.2.0" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />

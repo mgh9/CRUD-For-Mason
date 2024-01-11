@@ -15,6 +15,5 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Entities
 
         public Email Email { get; private set; }
         public BankAccountNumber BankAccountNumber { get; private set; }
-        public bool IsDeleted { get; private set; }
     }
 }

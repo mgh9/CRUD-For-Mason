@@ -13,49 +13,39 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
 
         public string Value { get; private set; }
 
-        public static PhoneNumber Create(string phoneNumber, string? region = "INT" )
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <param name="regionCode">ZZ means internationl region code</param>
+        /// <returns></returns>
+        public static PhoneNumber Create(string phoneNumber, string regionCode = "ZZ")
         {
-            Validate(phoneNumber, region);
+            Validate(phoneNumber, regionCode);
 
             return new PhoneNumber(phoneNumber);
         }
 
-        private static void Validate(string value, string? region)
+        private static void Validate(string phoneNumber, string regionCode)
         {
-            //if (string.IsNullOrWhiteSpace(value))
-            //{
-            //    throw new ArgumentException("Phone number cannot be null or empty", nameof(value));
-            //}
-
-            //if (!IsValidPhoneNumberFormat(value))
-            //{
-            //    throw new ArgumentException($"Invalid phone number format: {value}", nameof(value));
-            //}
-
             try
             {
                 var phoneNumberUtil = PhoneNumberUtil.GetInstance();
-                var phoneNumber = phoneNumberUtil.Parse(value, region);
+                var parsedPhoneNumber = phoneNumberUtil.Parse(phoneNumber, regionCode);
 
-                if (phoneNumberUtil.IsValidNumber(phoneNumber))
+                if (!phoneNumberUtil.IsValidNumber(parsedPhoneNumber))
                 {
-                    throw new ArgumentException($"Invalid phone number format: {value}", nameof(value));
+                    throw new ArgumentException($"Invalid phone number format: {phoneNumber}", nameof(phoneNumber));
                 }
             }
-            catch (NumberParseException)
+            catch (NumberParseException npx)
             {
-                throw new ArgumentException($"Invalid phone number format: {value}", nameof(value));
+                throw new ArgumentException($"Invalid phone number format: {phoneNumber}", nameof(phoneNumber));
             }
             catch (Exception)
             {
-                throw new ArgumentException($"Invalid phone number: {value}", nameof(value));
+                throw new ArgumentException($"Invalid phone number: {phoneNumber}", nameof(phoneNumber));
             }
-        }
-
-        private static bool IsValidPhoneNumberFormat(string value)
-        {
-            string phoneRegexPattern = @"^(\+|00)[1-9][0-9 \-\(\)\.]{7,32}$";
-            return Regex.IsMatch(value, phoneRegexPattern);
         }
 
         protected override IEnumerable<IComparable> GetEqualityComponents()

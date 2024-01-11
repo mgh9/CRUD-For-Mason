@@ -3,10 +3,14 @@ using Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects;
 
 namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Events;
 
-public sealed record CustomerUpdatedDomainEvent
-    (Guid Id, string? FirstName, string LastName, Email Email, PhoneNumber PhoneNumber, DateTime DateOfBirth
-            /* the BankAccountNumber cannot be changed */
-            , DateTime UpdatedTime) : DomainEvent
+public sealed record CustomerUpdatedDomainEvent(Guid Id
+                                                    , string? FirstName
+                                                    , string LastName
+                                                    , DateTime DateOfBirth
+                                                    , PhoneNumber PhoneNumber
+                                                    , Email Email
+                                                    /* the BankAccountNumber cannot be changed */
+                                                    , DateTime UpdatedTime) : DomainEvent
 {
 
 }

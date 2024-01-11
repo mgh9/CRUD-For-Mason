@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using IbanNet;
 
 namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
 {
@@ -18,22 +19,24 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
             return new BankAccountNumber(value);
         }
 
-        private static void Validate(string value)
+        private static void Validate(string bankAccountNumber)
         {
-            if(string.IsNullOrWhiteSpace(value))
-            {
-                throw new ArgumentException("Bank account number cannot be null or empty.", nameof(value));
-            }
+            //if(string.IsNullOrWhiteSpace(value))
+            //{
+            //    throw new ArgumentException("Bank account number cannot be null or empty.", nameof(value));
+            //}
 
-            if (!IsValidBankAccountNumberFormat(value))
-            {
-                throw new ArgumentException($"Invalid bank account number format: {value}", nameof(value));
-            }
-        }
+            //if (!IsValidBankAccountNumberFormat(value))
+            //{
+            //    throw new ArgumentException($"Invalid bank account number format: {value}", nameof(value));
+            //}
 
-        private static bool IsValidBankAccountNumberFormat(string value)
-        {
-            return value.All(char.IsDigit);
+            var ibanValidator = new IbanValidator();
+            var result = ibanValidator.Validate(bankAccountNumber);
+            if (!result.IsValid)
+            {
+                throw new ArgumentException($"Invalid IBAN format: {bankAccountNumber}. {result.Error}", nameof(bankAccountNumber));
+            }
         }
 
         protected override IEnumerable<IComparable> GetEqualityComponents()

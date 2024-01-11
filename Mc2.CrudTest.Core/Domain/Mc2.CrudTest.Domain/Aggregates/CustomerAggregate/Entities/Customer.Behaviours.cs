@@ -1,38 +1,23 @@
-﻿using Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects;
+﻿using Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Events;
+using Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects;
 
 namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Entities
 {
     public partial class Customer
     {
-        private Customer(string firstName, string lastName, DateTime dateOfBirth, string email, string phoneNumber, string bankAccountNumber)
+        public void Update(string? newFirstName, string newLastName, DateTime newDateOfBirth, PhoneNumber newPhoneNumber, Email newEmail)
         {
-            FirstName = firstName;
-            LastName = lastName;
-            DateOfBirth = dateOfBirth;
-            Email = Email.Create(email);
-            PhoneNumber = PhoneNumber.Create(phoneNumber);
-            BankAccountNumber = BankAccountNumber.Create(bankAccountNumber);
-        }
-
-        public static Customer Create(string firstName, string lastName, DateTime dateOfBirth, string email, string phoneNumber, string bankAccountNumber)
-        {
-            return new Customer(firstName, lastName, dateOfBirth, email, phoneNumber, bankAccountNumber);
-        }
-
-        public void Update(string newFirstName, string newLastName, DateTime newDateOfBirth, string newEmail, string newPhoneNumber, string newBankAccountNumber)
-        {
-            // Update the customer's information
-            FirstName = newFirstName;
-            LastName = newLastName;
+            FirstName = (newFirstName ?? string.Empty).Trim();
+            LastName = newLastName ?? throw new ArgumentNullException(newLastName);
+            PhoneNumber = newPhoneNumber ?? throw new ArgumentNullException(nameof(newPhoneNumber));
+            Email = newEmail ?? throw new ArgumentNullException(nameof(newEmail));
 
             if (IsValidBirthDate(newDateOfBirth))
             {
                 throw new ArgumentException("Invalid date of birth");
             }
 
-            Email = Email.Create(newEmail);
-            PhoneNumber = PhoneNumber.Create(newPhoneNumber);
-            BankAccountNumber = BankAccountNumber.Create(newBankAccountNumber);
+            AddEvent(new CustomerUpdatedDomainEvent(Id, newFirstName, newLastName, newDateOfBirth, newPhoneNumber, newEmail, DateTime.UtcNow));
         }
 
         private static bool IsValidBirthDate(DateTime newDateOfBirth)
@@ -42,7 +27,7 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Entities
 
         public void Delete()
         {
-            IsDeleted = true;
+            AddEvent(new CustomerDeletedDomainEvent(Id, DateTime.UtcNow));
         }
     }
 }

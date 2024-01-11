@@ -6,8 +6,8 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Events
     public sealed record CustomerCreatedDomainEvent(Guid Id
                                                         , string? FirstName
                                                         , string LastName
-                                                        , PhoneNumber PhoneNumber
                                                         , DateTime DateOfBirth
+                                                        , PhoneNumber PhoneNumber
                                                         , Email Email
                                                         , BankAccountNumber BankAccountNumber) : DomainEvent
     {
