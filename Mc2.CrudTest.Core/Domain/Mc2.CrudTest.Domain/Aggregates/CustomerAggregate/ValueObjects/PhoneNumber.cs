@@ -1,11 +1,16 @@
-﻿using System.Text.RegularExpressions;
-using CSharpFunctionalExtensions;
-using PhoneNumbers;
+﻿using CSharpFunctionalExtensions;
+using Mc2.CrudTest.Domain.Abstractions.ExternalServices;
+using Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Exceptions;
 
 namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
 {
     public class PhoneNumber : ValueObject
     {
+        private PhoneNumber()
+        {
+            // for de-hyd
+        }
+
         private PhoneNumber(string value)
         {
             Value = value;
@@ -19,32 +24,19 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
         /// <param name="phoneNumber"></param>
         /// <param name="regionCode">ZZ means internationl region code</param>
         /// <returns></returns>
-        public static PhoneNumber Create(string phoneNumber, string regionCode = "ZZ")
+        public static PhoneNumber Create(string phoneNumber, IPhoneNumberValidator externalValidator, string regionCode)
         {
-            Validate(phoneNumber, regionCode);
+            regionCode ??= "ZZ"; // if business needs, we can refactor this in some other way
+            Validate(phoneNumber, regionCode, externalValidator);
 
             return new PhoneNumber(phoneNumber);
         }
 
-        private static void Validate(string phoneNumber, string regionCode)
+        private static void Validate(string phoneNumber, string regionCode , IPhoneNumberValidator externalValidator)
         {
-            try
+            if (!externalValidator.IsValid(phoneNumber, regionCode, out string? message))
             {
-                var phoneNumberUtil = PhoneNumberUtil.GetInstance();
-                var parsedPhoneNumber = phoneNumberUtil.Parse(phoneNumber, regionCode);
-
-                if (!phoneNumberUtil.IsValidNumber(parsedPhoneNumber))
-                {
-                    throw new ArgumentException($"Invalid phone number format: {phoneNumber}", nameof(phoneNumber));
-                }
-            }
-            catch (NumberParseException npx)
-            {
-                throw new ArgumentException($"Invalid phone number format: {phoneNumber}", nameof(phoneNumber));
-            }
-            catch (Exception)
-            {
-                throw new ArgumentException($"Invalid phone number: {phoneNumber}", nameof(phoneNumber));
+                throw new InvalidPhoneNumberException(phoneNumber, message);
             }
         }
 

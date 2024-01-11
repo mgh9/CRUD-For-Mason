@@ -1,11 +1,15 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Net.Mail;
 using CSharpFunctionalExtensions;
+using Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Exceptions;
 
 namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
 {
     public class Email  :ValueObject
     {
-        public string Value { get; private set; }
+        private Email()
+        {
+            // for de-hydration
+        }
 
         private Email(string value)
         {
@@ -19,24 +23,18 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
             return new Email(value);
         }
 
-        private static void Validate(string value)
+        public string Value { get; private set; }
+
+        private static void Validate(string? email)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            try
             {
-                throw new ArgumentException("Email cannot be empty or null", nameof(value));
+                _ = new MailAddress(email);
             }
-
-            if(!IsValidEmailFormat(value))
+            catch
             {
-                throw new ArgumentException("Invalid email format", nameof(value));
+                throw new InvalidEmailException(email);
             }
-        }
-
-        private static bool IsValidEmailFormat(string value)
-        {
-            string emailRegexPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
-
-            return Regex.IsMatch(value, emailRegexPattern);
         }
 
         protected override IEnumerable<IComparable> GetEqualityComponents()

@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
-using IbanNet;
+using Mc2.CrudTest.Domain.Abstractions.ExternalServices;
+using Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Exceptions;
 
 namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
 {
@@ -12,30 +13,18 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
             Value = value;
         }
 
-        public static BankAccountNumber Create(string value)
+        public static BankAccountNumber Create(string bankAccountNumber, IBankAccountNumberValidator externalValidator)
         {
-            Validate(value);
+            Validate(bankAccountNumber, externalValidator);
 
-            return new BankAccountNumber(value);
+            return new BankAccountNumber(bankAccountNumber);
         }
 
-        private static void Validate(string bankAccountNumber)
+        private static void Validate(string bankAccountNumber, IBankAccountNumberValidator externalValidator)
         {
-            //if(string.IsNullOrWhiteSpace(value))
-            //{
-            //    throw new ArgumentException("Bank account number cannot be null or empty.", nameof(value));
-            //}
-
-            //if (!IsValidBankAccountNumberFormat(value))
-            //{
-            //    throw new ArgumentException($"Invalid bank account number format: {value}", nameof(value));
-            //}
-
-            var ibanValidator = new IbanValidator();
-            var result = ibanValidator.Validate(bankAccountNumber);
-            if (!result.IsValid)
+            if (!externalValidator.IsValid(bankAccountNumber, out string? message))
             {
-                throw new ArgumentException($"Invalid IBAN format: {bankAccountNumber}. {result.Error}", nameof(bankAccountNumber));
+                throw new InvalidBankAccountNumberException(bankAccountNumber, message);
             }
         }
 
