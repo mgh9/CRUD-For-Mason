@@ -2,13 +2,23 @@
 
 namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
 {
-    public class BankAccountNumber 
+    public class BankAccountNumber : ValueObject
     {
-        public string Value { get; }
+        public string Value { get; private set; }
 
-        public BankAccountNumber(string value)
+        private BankAccountNumber(string value)
         {
             Value = value;
+        }
+
+        public static BankAccountNumber Create(string value)
+        {
+            return new BankAccountNumber(value);
+        }
+
+        protected override IEnumerable<IComparable> GetEqualityComponents()
+        {
+            yield return Value;
         }
     }
 }

@@ -2,13 +2,23 @@
 
 namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
 {
-    public class Email 
+    public class Email  :ValueObject
     {
-        public string Value { get; }
+        public string Value { get; private set; }
 
-        public Email(string value)
+        private Email(string value)
         {
             Value = value;
+        }
+
+        public static Email Create(string value)
+        {
+            return new Email(value);
+        }
+
+        protected override IEnumerable<IComparable> GetEqualityComponents()
+        {
+            yield return Value;
         }
     }
 }

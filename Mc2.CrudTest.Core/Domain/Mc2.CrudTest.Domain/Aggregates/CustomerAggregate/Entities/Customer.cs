@@ -36,8 +36,8 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Entities
             }
 
             // Update the customer's information
-            customer.Email = new Email(newEmail);
-            customer.PhoneNumber = new PhoneNumber(newPhoneNumber);
+            customer.Email = Email.Create(newEmail);
+            customer.PhoneNumber = PhoneNumber.Create(newPhoneNumber);
 
             return customer;
         }
