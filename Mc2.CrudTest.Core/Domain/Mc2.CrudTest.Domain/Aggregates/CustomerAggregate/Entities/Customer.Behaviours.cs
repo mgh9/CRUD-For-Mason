@@ -4,7 +4,7 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Entities
 {
     public partial class Customer
     {
-        private Customer(string firstName, string lastName, string email, DateTime dateOfBirth, string phoneNumber, string bankAccountNumber)
+        private Customer(string firstName, string lastName, DateTime dateOfBirth, string email, string phoneNumber, string bankAccountNumber)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -14,12 +14,12 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Entities
             BankAccountNumber = BankAccountNumber.Create(bankAccountNumber);
         }
 
-        public static Customer Create(string firstName, string lastName, string email, DateTime dateOfBirth, string phoneNumber, string bankAccountNumber)
+        public static Customer Create(string firstName, string lastName, DateTime dateOfBirth, string email, string phoneNumber, string bankAccountNumber)
         {
-            return new Customer(firstName, lastName, email, dateOfBirth, phoneNumber, bankAccountNumber);
+            return new Customer(firstName, lastName, dateOfBirth, email, phoneNumber, bankAccountNumber);
         }
 
-        public void Update(string newFirstName, string newLastName, string newEmail, DateTime newDateOfBirth, string newPhoneNumber, string newBankAccountNumber)
+        public void Update(string newFirstName, string newLastName, DateTime newDateOfBirth, string newEmail, string newPhoneNumber, string newBankAccountNumber)
         {
             // Update the customer's information
             FirstName = newFirstName;
