@@ -2,54 +2,18 @@
 
 namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Entities
 {
-    public class Customer
+    public partial class Customer
     {
-        public string? FirstName { get; set; }
-        public string LastName { get; set; }
+        public string? FirstName { get; private set; }
+        public string LastName { get; private set; }
         public string FullName => $"{FirstName} {LastName}";
 
-        public PhoneNumber PhoneNumber { get; set; }
+        public PhoneNumber PhoneNumber { get; private set; }
 
-        public DateTime DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; private set; }
 
-        public Email Email { get; set; }
-        public BankAccountNumber BankAccountNumber { get; set; }
-        public bool IsDeleted { get; set; }
-
-        public void Delete()
-        {
-            IsDeleted = true;
-        }
-
-        public static Customer UpdateCustomer(Customer customer, string newEmail, string newPhoneNumber)
-        {
-            // Check if the new email format is valid
-            if (!IsValidEmail(newEmail))
-            {
-                throw new ArgumentException("Invalid email format");
-            }
-
-            // Check if the new phone number format is valid
-            if (!IsValidPhoneNumber(newPhoneNumber))
-            {
-                throw new ArgumentException("Invalid phone number format");
-            }
-
-            // Update the customer's information
-            customer.Email = Email.Create(newEmail);
-            customer.PhoneNumber = PhoneNumber.Create(newPhoneNumber);
-
-            return customer;
-        }
-
-        private static bool IsValidEmail(string email)
-        {
-            return false;
-        }
-
-        private static bool IsValidPhoneNumber(string phoneNumber)
-        {
-            return false;
-        }
+        public Email Email { get; private set; }
+        public BankAccountNumber BankAccountNumber { get; private set; }
+        public bool IsDeleted { get; private set; }
     }
 }
