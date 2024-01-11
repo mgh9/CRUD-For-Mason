@@ -1,4 +1,5 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Text.RegularExpressions;
+using CSharpFunctionalExtensions;
 
 namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
 {
@@ -22,8 +23,19 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                throw new ArgumentNullException(nameof(value));
+                throw new ArgumentException("Phone number cannot be null or empty", nameof(value));
             }
+
+            if (!IsValidPhoneNumberFormat(value))
+            {
+                throw new ArgumentException($"Invalid phone number format: {value}", nameof(value));
+            }
+        }
+
+        private static bool IsValidPhoneNumberFormat(string value)
+        {
+            string phoneRegexPattern = @"^\+[1-9]{1}[0-9]{3,14}$";
+            return Regex.IsMatch(value, phoneRegexPattern);
         }
 
         protected override IEnumerable<IComparable> GetEqualityComponents()

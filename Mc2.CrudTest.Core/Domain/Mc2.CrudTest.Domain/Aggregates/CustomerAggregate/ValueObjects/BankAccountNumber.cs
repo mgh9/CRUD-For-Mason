@@ -22,8 +22,18 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
         {
             if(string.IsNullOrWhiteSpace(value))
             {
-                throw new ArgumentNullException(nameof(value));
+                throw new ArgumentException("Bank account number cannot be null or empty.", nameof(value));
             }
+
+            if (!IsValidBankAccountNumberFormat(value))
+            {
+                throw new ArgumentException($"Invalid bank account number format: {value}", nameof(value));
+            }
+        }
+
+        private static bool IsValidBankAccountNumberFormat(string value)
+        {
+            return value.All(char.IsDigit);
         }
 
         protected override IEnumerable<IComparable> GetEqualityComponents()
