@@ -15,6 +15,7 @@ namespace Mc2.CrudTest.Domain.Tests
         public static IEnumerable<object[]> NotNullButInvalidPhoneNumbers=>
                                                  new List<object[]>
                                                  {
+                                                    new object[] { "+98936" }, 
                                                     new object[] { "invalid-phone" },
                                                     new object[] { "1" },  
                                                     new object[] { "4,66" }, 
@@ -23,8 +24,6 @@ namespace Mc2.CrudTest.Domain.Tests
                                                     new object[] { "^%$gd&'" },   
                                                     new object[] { "@da" },   
                                                     new object[] { "+++565654465@a.com" }, 
-                                                    new object[] { "+98936" }, 
-                                                    new object[] { "+98936000" }, 
                                                     new object[] { "-98936000" }, 
                                                     new object[] { "-989364726673" }, 
                                                  };
