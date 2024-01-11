@@ -34,7 +34,7 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
 
         private static bool IsValidPhoneNumberFormat(string value)
         {
-            string phoneRegexPattern = @"^\+[1-9]{1}[0-9]{3,14}$";
+            string phoneRegexPattern = @"^(\+|00)[1-9][0-9 \-\(\)\.]{7,32}$";
             return Regex.IsMatch(value, phoneRegexPattern);
         }
 
