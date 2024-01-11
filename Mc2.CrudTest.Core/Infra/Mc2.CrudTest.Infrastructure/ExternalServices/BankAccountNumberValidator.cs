@@ -17,7 +17,7 @@ public class BankAccountNumberValidator : IBankAccountNumberValidator
     {
         // e.g : NL91ABNA0417164300
 
-        ArgumentException.ThrowIfNullOrWhiteSpace(bankAccountNumber);
+        //ArgumentException.ThrowIfNullOrWhiteSpace(bankAccountNumber);
 
         //if (!Regex.IsMatch(bankAccountNumber, VALID_BANK_ACCOUNT_NUMBER_REGEX))
         //{

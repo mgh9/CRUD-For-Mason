@@ -1,5 +1,8 @@
-﻿using Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Entities;
+﻿using Mc2.CrudTest.Domain.Abstractions.ExternalServices;
+using Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Entities;
+using Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Exceptions;
 using Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects;
+using Moq;
 
 namespace Mc2.CrudTest.Domain.Tests
 {
@@ -41,39 +44,60 @@ namespace Mc2.CrudTest.Domain.Tests
         [MemberData(nameof(NullOrEmptyBankAccountNumbers))]
         public void CreateCustomer_ThrowsException_ForEmptyBankAccountNumber(string emptyBankAccountNumber)
         {
+            // Arrange
+            var phoneNumberValidatorMock = new Mock<IPhoneNumberValidator>();
+            phoneNumberValidatorMock.Setup(v => v.IsValid(It.IsAny<string>(), out It.Ref<string?>.IsAny)).Returns(true);
+
+            var bankAccountNumberValidatorMock = new Mock<IBankAccountNumberValidator>();
+            bankAccountNumberValidatorMock.Setup(v => v.IsValid(It.IsAny<string>(), out It.Ref<string?>.IsAny)).Returns(false);
+
             var id = Guid.NewGuid();
 
-            Assert.Throws<ArgumentException>(() => Customer.Create(id, "Mahdi", "Ghardashpoor"
+            Assert.Throws<InvalidBankAccountNumberException>(() => Customer.Create(id, "Mahdi", "Ghardashpoor"
                 , new DateTime(1990, 1, 1)
-                , PhoneNumber.Create("+989364726673")
+                , PhoneNumber.Create("+989364726673", phoneNumberValidatorMock.Object)
                 , Email.Create("mahdi.ghardashpoor@gmail.com")
-                , BankAccountNumber.Create(emptyBankAccountNumber)));
+                , BankAccountNumber.Create(emptyBankAccountNumber, bankAccountNumberValidatorMock.Object)));
         }
 
         [Theory]
         [MemberData(nameof(NotNullButInvalidBankAccountNumbers))]
         public void CreateCustomer_ThrowsException_ForIInvalidBankAccountNumber(string invalidBankAccountNumber)
         {
+            // Arrange
+            var phoneNumberValidatorMock = new Mock<IPhoneNumberValidator>();
+            phoneNumberValidatorMock.Setup(v => v.IsValid(It.IsAny<string>(), out It.Ref<string?>.IsAny)).Returns(true);
+
+            var bankAccountNumberValidatorMock = new Mock<IBankAccountNumberValidator>();
+            bankAccountNumberValidatorMock.Setup(v => v.IsValid(It.IsAny<string>(), out It.Ref<string?>.IsAny)).Returns(false);
+
             var id = Guid.NewGuid();
 
-            Assert.Throws<ArgumentException>(() => Customer.Create(id, "Mahdi", "Ghardashpoor"
+            Assert.Throws<InvalidBankAccountNumberException>(() => Customer.Create(id, "Mahdi", "Ghardashpoor"
                 , new DateTime(1990, 1, 1)
-                , PhoneNumber.Create("9364726673", "+98")
+                , PhoneNumber.Create("+989364726673", phoneNumberValidatorMock.Object)
                 , Email.Create("mahdi.ghardashpoor@gmail.com")
-                , BankAccountNumber.Create(invalidBankAccountNumber)));
+                , BankAccountNumber.Create(invalidBankAccountNumber, bankAccountNumberValidatorMock.Object)));
         }
 
         [Theory]
         [MemberData(nameof(ValidBankAccountNumbers))]
         public void CreateCustomer_DontThrowsException_ForValidBankAccountNumber(string validBankAccountNumber)
         {
+            // Arrange
+            var phoneNumberValidatorMock = new Mock<IPhoneNumberValidator>();
+            phoneNumberValidatorMock.Setup(v => v.IsValid(It.IsAny<string>(), out It.Ref<string?>.IsAny)).Returns(true);
+
+            var bankAccountNumberValidatorMock = new Mock<IBankAccountNumberValidator>();
+            bankAccountNumberValidatorMock.Setup(v => v.IsValid(It.IsAny<string>(), out It.Ref<string?>.IsAny)).Returns(true);
+
             var id = Guid.NewGuid();
 
             Customer.Create(id, "Mahdi", "Ghardashpoor"
                 , new DateTime(1990, 1, 1)
-                , PhoneNumber.Create("+989364726673")
+                , PhoneNumber.Create("+989364726673", phoneNumberValidatorMock.Object)
                 , Email.Create("mahdi.ghardashpoor@gmail.com")
-                , BankAccountNumber.Create(validBankAccountNumber));
+                , BankAccountNumber.Create(validBankAccountNumber, bankAccountNumberValidatorMock.Object));
         }
     }
 }
