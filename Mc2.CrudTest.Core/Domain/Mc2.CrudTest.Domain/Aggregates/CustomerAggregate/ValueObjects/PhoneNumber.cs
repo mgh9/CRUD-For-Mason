@@ -24,17 +24,17 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
         /// <param name="phoneNumber"></param>
         /// <param name="regionCode">ZZ means internationl region code</param>
         /// <returns></returns>
-        public static PhoneNumber Create(string phoneNumber, IPhoneNumberValidator externalValidator, string regionCode)
+        public static PhoneNumber Create(string phoneNumber, IPhoneNumberValidator externalValidator)
         {
-            regionCode ??= "ZZ"; // if business needs, we can refactor this in some other way
-            Validate(phoneNumber, regionCode, externalValidator);
+            //regionCode ??= "ZZ"; // if the business needs, we can refactor this in some other way
+            Validate(phoneNumber, externalValidator);
 
             return new PhoneNumber(phoneNumber);
         }
 
-        private static void Validate(string phoneNumber, string regionCode , IPhoneNumberValidator externalValidator)
+        private static void Validate(string phoneNumber, IPhoneNumberValidator externalValidator)
         {
-            if (!externalValidator.IsValid(phoneNumber, regionCode, out string? message))
+            if (!externalValidator.IsValid(phoneNumber, out string? message))
             {
                 throw new InvalidPhoneNumberException(phoneNumber, message);
             }
