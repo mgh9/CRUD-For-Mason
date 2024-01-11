@@ -5,6 +5,19 @@ namespace Mc2.CrudTest.Domain.Tests
 {
     public class CustomerTests
     {
+        private static Customer CreateSimpleCustomer()
+        {
+            var phoneNumber = PhoneNumber.Create("+989364726673");
+            var email = Email.Create("mahdi.ghardashpoor@gmail.com");
+            var bankAccountNumber = BankAccountNumber.Create("123456");
+
+            var createdCustomer = Customer.Create("Mahdi", "Ghardashpoor"
+                , new DateTime(1990, 1, 1)
+                , email.Value, phoneNumber.Value, bankAccountNumber.Value);
+
+            return createdCustomer;
+        }
+
         [Fact]
         public void Create_Customer_ReturnsSameInfo()
         {
@@ -13,26 +26,18 @@ namespace Mc2.CrudTest.Domain.Tests
             var email = Email.Create("mahdi.ghardashpoor@gmail.com");
             var bankAccountNumber = BankAccountNumber.Create("123456");
 
-            var customer = new Customer
-            {
-                FirstName = "Mahdi",
-                LastName = "Ghardashpoor",
-                DateOfBirth = new DateTime(1990, 1, 1),
-                Email = email,
-                PhoneNumber = phoneNumber,
-                BankAccountNumber = bankAccountNumber
-            };
+            var createdCustomer = CreateSimpleCustomer();
 
             // Act and Assert
-            Assert.NotNull(customer);
-            Assert.Equal("Mahdi", customer.FirstName);
-            Assert.Equal("Ghardashpoor", customer.LastName);
-            Assert.Equal("Mahdi Ghardashpoor", customer.FullName);
-            Assert.Equal(new DateTime(1990, 1, 1), customer.DateOfBirth);
-            Assert.Equal(email, customer.Email);
-            Assert.Equal(phoneNumber, customer.PhoneNumber);
-            Assert.Equal(bankAccountNumber, customer.BankAccountNumber);
-            Assert.Equal(false, customer.IsDeleted);
+            Assert.NotNull(createdCustomer);
+            Assert.Equal("Mahdi", createdCustomer.FirstName);
+            Assert.Equal("Ghardashpoor", createdCustomer.LastName);
+            Assert.Equal("Mahdi Ghardashpoor", createdCustomer.FullName);
+            Assert.Equal(new DateTime(1990, 1, 1), createdCustomer.DateOfBirth);
+            Assert.Equal(email, createdCustomer.Email);
+            Assert.Equal(phoneNumber, createdCustomer.PhoneNumber);
+            Assert.Equal(bankAccountNumber, createdCustomer.BankAccountNumber);
+            Assert.Equal(false, createdCustomer.IsDeleted);
         }
 
         [Fact]
@@ -43,84 +48,58 @@ namespace Mc2.CrudTest.Domain.Tests
             var email = Email.Create("mahdi.ghardashpoor@gmail.com");
             var bankAccountNumber = BankAccountNumber.Create("123456");
 
-            var customer = new Customer
-            {
-                FirstName = "Mahdi",
-                LastName = "Ghardashpoor",
-                DateOfBirth = new DateTime(1990, 1, 1),
-                Email = email,
-                PhoneNumber = phoneNumber,
-                BankAccountNumber = bankAccountNumber
-            };
+            var createdCustomer = CreateSimpleCustomer();
 
             // Act
             // Simulate updating customer information
-            var newEmail = Email.Create("updated.email@gmail.com");
-            customer.Email = newEmail;
-
-            var newPhoneNumber = PhoneNumber.Create("1234567890");
-            customer.PhoneNumber = newPhoneNumber;
-
-            //var newBankAccountNumber= new BankAccountNumber("12345");
-            //customer.BankAccountNumber= newBankAccountNumber;
+            createdCustomer.Update(createdCustomer.FirstName
+                , "newLastName", createdCustomer.DateOfBirth
+                , createdCustomer.Email.Value, createdCustomer.PhoneNumber.Value, createdCustomer.BankAccountNumber.Value);
 
             // Assert
-            Assert.Equal("Mahdi", customer.FirstName);
-            Assert.Equal("Ghardashpoor", customer.LastName);
-            Assert.Equal(new DateTime(1990, 1, 1), customer.DateOfBirth);
-            Assert.Equal(newEmail, customer.Email);
-            Assert.Equal(newPhoneNumber, customer.PhoneNumber);
-            //Assert.Equal(newBankAccountNumber, customer.BankAccountNumber); // Bank account number should remain unchanged
+            Assert.Equal("Mahdi", createdCustomer.FirstName);
+            Assert.Equal("newLastName", createdCustomer.LastName);
+            Assert.Equal(new DateTime(1990, 1, 1), createdCustomer.DateOfBirth);
+            Assert.Equal(email, createdCustomer.Email);
+            Assert.Equal(phoneNumber, createdCustomer.PhoneNumber);
+            Assert.Equal(bankAccountNumber, createdCustomer.BankAccountNumber);
         }
 
         [Fact]
         public void Delete_Customer_SetsIsDeletedFlag()
         {
             // Arrange
-            var customer = new Customer
-            {
-                FirstName = "Mahdi",
-                LastName = "Ghardashpoor",
-                IsDeleted = false
-            };
+            var createdCustomer = CreateSimpleCustomer();
 
             // Act
             // Implement the deletion logic, whether it's setting a flag or removing from a collection
-            customer.Delete();
+            createdCustomer.Delete();
 
             // Assert
-            Assert.True(customer.IsDeleted);
+            Assert.True(createdCustomer.IsDeleted);
         }
 
         [Fact]
         public void Read_Customer_ReturnsCorrectInfo()
         {
             // Arrange
-            var email  = Email.Create("Mahdi.Ghardashpoor@gmail.com");
+            var email = Email.Create("mahdi.ghardashpoor@gmail.com");
             var phoneNumber = PhoneNumber.Create("+989364726673");
             var bankAccountNumber = BankAccountNumber.Create("123456");
 
-            var customer = new Customer
-            {
-                FirstName = "Mahdi",
-                LastName = "Ghardashpoor",
-                DateOfBirth = new DateTime(1990, 1, 1),
-                Email = email,
-                PhoneNumber = phoneNumber,
-                BankAccountNumber = bankAccountNumber
-            };
+            var createdCustomer = CreateSimpleCustomer();
 
             // Act
             // Implement the logic to read customer information.
 
             // Assert
-            Assert.Equal("Mahdi", customer.FirstName);
-            Assert.Equal("Ghardashpoor", customer.LastName);
-            Assert.Equal(new DateTime(1990, 1, 1), customer.DateOfBirth);
-            Assert.Equal(email, customer.Email);
-            Assert.Equal(phoneNumber, customer.PhoneNumber);
-            Assert.Equal(bankAccountNumber, customer.BankAccountNumber);
-            Assert.False(customer.IsDeleted);
+            Assert.Equal("Mahdi", createdCustomer.FirstName);
+            Assert.Equal("Ghardashpoor", createdCustomer.LastName);
+            Assert.Equal(new DateTime(1990, 1, 1), createdCustomer.DateOfBirth);
+            Assert.Equal(email, createdCustomer.Email);
+            Assert.Equal(phoneNumber, createdCustomer.PhoneNumber);
+            Assert.Equal(bankAccountNumber, createdCustomer.BankAccountNumber);
+            Assert.False(createdCustomer.IsDeleted);
         }
     }
 }
