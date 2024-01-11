@@ -3,7 +3,7 @@ using Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects;
 
 namespace Mc2.CrudTest.Domain.Tests
 {
-    public class CustomerTests
+    public partial class CustomerTests
     {
         private static Customer CreateSimpleCustomer()
         {
