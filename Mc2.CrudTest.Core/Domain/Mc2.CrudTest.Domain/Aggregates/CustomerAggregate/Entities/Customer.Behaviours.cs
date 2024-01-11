@@ -24,10 +24,20 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.Entities
             // Update the customer's information
             FirstName = newFirstName;
             LastName = newLastName;
-            DateOfBirth = newDateOfBirth;
+
+            if (IsValidBirthDate(newDateOfBirth))
+            {
+                throw new ArgumentException("Invalid date of birth");
+            }
+
             Email = Email.Create(newEmail);
             PhoneNumber = PhoneNumber.Create(newPhoneNumber);
             BankAccountNumber = BankAccountNumber.Create(newBankAccountNumber);
+        }
+
+        private static bool IsValidBirthDate(DateTime newDateOfBirth)
+        {
+            return newDateOfBirth > DateTime.Now || newDateOfBirth < DateTime.Now.AddYears(-120);
         }
 
         public void Delete()
