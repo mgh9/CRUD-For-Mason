@@ -25,6 +25,17 @@ namespace Mc2.CrudTest.Domain.Tests
                                                     new object[] { "@a.com" }, 
                                                  };
 
+        public static IEnumerable<object[]> ValidEmails =>
+                                         new List<object[]>
+                                         {
+                                                    new object[] { "valid-email@x.com" },
+                                                    new object[] { "a@b.com" },
+                                                    new object[] { "1@2.com" },
+                                                    new object[] { "aasdasdsadasd@g.gov" },
+                                                    new object[] { "mahdi.ghardashpoor@gmail.com" },
+                                         };
+
+
         [Theory]
         [MemberData(nameof(NullOrEmptyEmails))]
         public void CreateCustomer_ThrowsException_ForEmptyEmail(string emptyEmail)
@@ -39,6 +50,14 @@ namespace Mc2.CrudTest.Domain.Tests
         {
             Assert.Throws<ArgumentException>(() => Customer.Create("Mahdi", "Ghardashpoor"
                 , new DateTime(1990, 1, 1), invalidEmail, "+989364726673", "123456"));
+        }
+
+        [Theory]
+        [MemberData(nameof(ValidEmails))]
+        public void CreateCustomer_DontThrowsException_ForValidEmail(string validEmail)
+        {
+            Customer.Create("Mahdi", "Ghardashpoor"
+                , new DateTime(1990, 1, 1), validEmail, "+989364726673", "123456");
         }
     }
 }
