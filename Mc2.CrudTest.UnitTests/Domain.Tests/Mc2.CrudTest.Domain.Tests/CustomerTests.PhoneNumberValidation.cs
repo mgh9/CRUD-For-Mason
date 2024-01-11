@@ -33,31 +33,47 @@ namespace Mc2.CrudTest.Domain.Tests
                                          {
                                                     new object[] { "+989364726673" },
                                                     new object[] { "+543521448887" }, 
-                                                    new object[] { "+16517803862" }, 
+                                                    new object[] { "+16517803862" },
+                                                    new object[] { "+12025550113" },
                                          };
 
         [Theory]
         [MemberData(nameof(NullOrEmptyPhoneNumbers))]
         public void CreateCustomer_ThrowsException_ForEmptyPhoneNumber(string emptyPhoneNumber)
         {
-            Assert.Throws<ArgumentException>(() => Customer.Create("Mahdi", "Ghardashpoor"
-                , new DateTime(1990, 1, 1), "mahdi.ghardashpoor@gmail.com", emptyPhoneNumber, "123456"));
+            var id = Guid.NewGuid();
+
+            Assert.Throws<ArgumentException>(() => Customer.Create(id, "Mahdi", "Ghardashpoor"
+                , new DateTime(1990, 1, 1)
+                , PhoneNumber.Create(emptyPhoneNumber)
+                , Email.Create("mahdi.ghardashpoor@gmail.com")
+                , BankAccountNumber.Create("DE85500211205996587344")));
         }
 
         [Theory]
         [MemberData(nameof(NotNullButInvalidPhoneNumbers))]
         public void CreateCustomer_ThrowsException_ForIInvalidPhoneNumber(string invalidPhoneNumber)
         {
-            Assert.Throws<ArgumentException>(() => Customer.Create("Mahdi", "Ghardashpoor"
-                , new DateTime(1990, 1, 1), "mahdi.ghardashpoor@gmail.com", invalidPhoneNumber, "123456"));
+            var id = Guid.NewGuid();
+
+            Assert.Throws<ArgumentException>(() => Customer.Create(id, "Mahdi", "Ghardashpoor"
+                , new DateTime(1990, 1, 1)
+                , PhoneNumber.Create(invalidPhoneNumber)
+                , Email.Create("mahdi.ghardashpoor@gmail.com")
+                , BankAccountNumber.Create("DE85500211205996587344")));
         }
 
         [Theory]
-        [MemberData(nameof(ValidPhoneNumbers))]
+        [MemberData(nameof(ValidPhoneNumbers))]        
         public void CreateCustomer_DontThrowsException_ForValidPhoneNumber(string validPhoneNumber)
         {
-            Customer.Create("Mahdi", "Ghardashpoor"
-                , new DateTime(1990, 1, 1), "mahdi.ghardashpoor@gmail.com", validPhoneNumber, "123456");
+            var id = Guid.NewGuid();
+
+            Customer.Create(id, "Mahdi", "Ghardashpoor"
+                , new DateTime(1990, 1, 1)
+                , PhoneNumber.Create(validPhoneNumber)                
+                , Email.Create("mahdi.ghardashpoor@gmail.com")
+                , BankAccountNumber.Create("DE85500211205996587344"));
         }
     }
 }

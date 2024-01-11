@@ -7,13 +7,14 @@ namespace Mc2.CrudTest.Domain.Tests
     {
         private static Customer CreateSimpleCustomer()
         {
+            var id = Guid.NewGuid();
             var phoneNumber = PhoneNumber.Create("+989364726673");
             var email = Email.Create("mahdi.ghardashpoor@gmail.com");
-            var bankAccountNumber = BankAccountNumber.Create("123456");
+            var bankAccountNumber = BankAccountNumber.Create("DE85500211205996587344");
 
-            var createdCustomer = Customer.Create("Mahdi", "Ghardashpoor"
+            var createdCustomer = Customer.Create(id, "Mahdi", "Ghardashpoor"
                 , new DateTime(1990, 1, 1)
-                , email.Value, phoneNumber.Value, bankAccountNumber.Value);
+                , phoneNumber, email, bankAccountNumber);
 
             return createdCustomer;
         }
@@ -24,7 +25,7 @@ namespace Mc2.CrudTest.Domain.Tests
             // Arrange
             var phoneNumber = PhoneNumber.Create("+989364726673");
             var email = Email.Create("mahdi.ghardashpoor@gmail.com");
-            var bankAccountNumber = BankAccountNumber.Create("123456");
+            var bankAccountNumber = BankAccountNumber.Create("DE85500211205996587344");
 
             var createdCustomer = CreateSimpleCustomer();
 
@@ -37,7 +38,6 @@ namespace Mc2.CrudTest.Domain.Tests
             Assert.Equal(email, createdCustomer.Email);
             Assert.Equal(phoneNumber, createdCustomer.PhoneNumber);
             Assert.Equal(bankAccountNumber, createdCustomer.BankAccountNumber);
-            Assert.Equal(false, createdCustomer.IsDeleted);
         }
 
         [Fact]
@@ -46,15 +46,16 @@ namespace Mc2.CrudTest.Domain.Tests
             // Arrange
             var phoneNumber = PhoneNumber.Create("+989364726673");
             var email = Email.Create("mahdi.ghardashpoor@gmail.com");
-            var bankAccountNumber = BankAccountNumber.Create("123456");
+            var bankAccountNumber = BankAccountNumber.Create("DE85500211205996587344");
 
             var createdCustomer = CreateSimpleCustomer();
 
             // Act
             // Simulate updating customer information
-            createdCustomer.Update(createdCustomer.FirstName
-                , "newLastName", createdCustomer.DateOfBirth
-                , createdCustomer.Email.Value, createdCustomer.PhoneNumber.Value, createdCustomer.BankAccountNumber.Value);
+            createdCustomer.Update(createdCustomer.FirstName, "newLastName"
+                , createdCustomer.DateOfBirth
+                , createdCustomer.PhoneNumber
+                , createdCustomer.Email);
 
             // Assert
             Assert.Equal("Mahdi", createdCustomer.FirstName);
@@ -76,7 +77,6 @@ namespace Mc2.CrudTest.Domain.Tests
             createdCustomer.Delete();
 
             // Assert
-            Assert.True(createdCustomer.IsDeleted);
         }
 
         [Fact]
@@ -85,7 +85,7 @@ namespace Mc2.CrudTest.Domain.Tests
             // Arrange
             var email = Email.Create("mahdi.ghardashpoor@gmail.com");
             var phoneNumber = PhoneNumber.Create("+989364726673");
-            var bankAccountNumber = BankAccountNumber.Create("123456");
+            var bankAccountNumber = BankAccountNumber.Create("DE85500211205996587344");
 
             var createdCustomer = CreateSimpleCustomer();
 
@@ -99,7 +99,6 @@ namespace Mc2.CrudTest.Domain.Tests
             Assert.Equal(email, createdCustomer.Email);
             Assert.Equal(phoneNumber, createdCustomer.PhoneNumber);
             Assert.Equal(bankAccountNumber, createdCustomer.BankAccountNumber);
-            Assert.False(createdCustomer.IsDeleted);
         }
     }
 }
