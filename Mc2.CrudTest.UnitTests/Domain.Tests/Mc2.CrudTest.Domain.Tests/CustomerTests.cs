@@ -9,9 +9,9 @@ namespace Mc2.CrudTest.Domain.Tests
         public void Create_Customer_ReturnsSameInfo()
         {
             // Arrange
-            var phoneNumber = new PhoneNumber("+989364726673");
-            var email = new Email("mahdi.ghardashpoor@gmail.com");
-            var bankAccountNumber = new BankAccountNumber("123456");
+            var phoneNumber = PhoneNumber.Create("+989364726673");
+            var email = Email.Create("mahdi.ghardashpoor@gmail.com");
+            var bankAccountNumber = BankAccountNumber.Create("123456");
 
             var customer = new Customer
             {
@@ -39,9 +39,9 @@ namespace Mc2.CrudTest.Domain.Tests
         public void Update_Customer_ReturnsUpdatedInfo()
         {
             // Arrange
-            var phoneNumber = new PhoneNumber("+989364726673");
-            var email = new Email("mahdi.ghardashpoor@gmail.com");
-            var bankAccountNumber = new BankAccountNumber("123456");
+            var phoneNumber = PhoneNumber.Create("+989364726673");
+            var email = Email.Create("mahdi.ghardashpoor@gmail.com");
+            var bankAccountNumber = BankAccountNumber.Create("123456");
 
             var customer = new Customer
             {
@@ -55,10 +55,10 @@ namespace Mc2.CrudTest.Domain.Tests
 
             // Act
             // Simulate updating customer information
-            var newEmail = new Email("updated.email@gmail.com");
+            var newEmail = Email.Create("updated.email@gmail.com");
             customer.Email = newEmail;
 
-            var newPhoneNumber = new PhoneNumber("1234567890");
+            var newPhoneNumber = PhoneNumber.Create("1234567890");
             customer.PhoneNumber = newPhoneNumber;
 
             //var newBankAccountNumber= new BankAccountNumber("12345");
@@ -96,9 +96,9 @@ namespace Mc2.CrudTest.Domain.Tests
         public void Read_Customer_ReturnsCorrectInfo()
         {
             // Arrange
-            var email  = new Email("Mahdi.Ghardashpoor@gmail.com");
-            var phoneNumber = new PhoneNumber("+989364726673");
-            var bankAccountNumber = new BankAccountNumber("123456");
+            var email  = Email.Create("Mahdi.Ghardashpoor@gmail.com");
+            var phoneNumber = PhoneNumber.Create("+989364726673");
+            var bankAccountNumber = BankAccountNumber.Create("123456");
 
             var customer = new Customer
             {
