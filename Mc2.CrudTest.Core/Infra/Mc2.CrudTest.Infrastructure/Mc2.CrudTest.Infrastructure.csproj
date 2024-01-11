@@ -29,7 +29,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\Application\Mc2.CrudTest.Application\Mc2.CrudTest.Application.csproj" />
 	  <ProjectReference Include="..\..\Domain\Mc2.CrudTest.Domain\Mc2.CrudTest.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Data\Migrations\" />
 	</ItemGroup>
 
 	
