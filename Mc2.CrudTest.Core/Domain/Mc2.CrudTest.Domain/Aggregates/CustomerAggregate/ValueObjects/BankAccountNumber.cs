@@ -8,6 +8,11 @@ namespace Mc2.CrudTest.Domain.Aggregates.CustomerAggregate.ValueObjects
     {
         public string Value { get; private set; }
 
+        private BankAccountNumber() 
+        {
+            // for de-hydration
+        }
+
         private BankAccountNumber(string value)
         {
             Value = value;
