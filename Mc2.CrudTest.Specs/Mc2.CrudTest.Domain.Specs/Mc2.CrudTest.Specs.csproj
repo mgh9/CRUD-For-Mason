@@ -16,7 +16,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="bin\Debug\net8.0\" />
 		<Folder Include="Drivers\" />
+		<Folder Include="Results\" />
 		<Folder Include="Support\" />
 	</ItemGroup>
 
