@@ -4,6 +4,7 @@ using Mc2.CrudTest.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mc2.CrudTest.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240112200306_RemovePhoneNumberUniquenessFromCustomer")]
+    partial class RemovePhoneNumberUniquenessFromCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +91,8 @@ namespace Mc2.CrudTest.Infrastructure.Data.Migrations
 
                             b1.HasKey("CustomerReadModelId");
 
-                            b1.HasIndex("Value");
+                            b1.HasIndex("Value")
+                                .IsUnique();
 
                             b1.ToTable("Customers");
 

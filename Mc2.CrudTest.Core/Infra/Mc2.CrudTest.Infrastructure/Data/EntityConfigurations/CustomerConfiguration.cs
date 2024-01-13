@@ -44,8 +44,7 @@ namespace Mc2.CrudTest.Infrastructure.Data.Configurations
                                 .HasColumnType("varchar(20)")
                                 .IsRequired();
 
-                childBuilder.HasIndex(e => e.Value)
-                                .IsUnique();
+                childBuilder.HasIndex(e => e.Value);                                
             });
 
             builder.OwnsOne(e => e.BankAccountNumber, childBuilder =>
@@ -55,8 +54,8 @@ namespace Mc2.CrudTest.Infrastructure.Data.Configurations
                     .HasColumnType("varchar(64)")
                     .IsRequired();
 
-                childBuilder.HasIndex(e => e.Value)
-                                .IsUnique();
+                childBuilder.HasIndex(e => e.Value);
+                                //.IsUnique(); <<<< just noticed u didn't mention this needs to be unique in the Readme file instructions
             });
 
             builder.Property(c => c.DateOfBirth)
