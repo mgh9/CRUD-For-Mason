@@ -12,9 +12,4 @@
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Abstractions\ExternalServices\" />
-	  <Folder Include="Aggregates\" />
-	</ItemGroup>
-
 </Project>
